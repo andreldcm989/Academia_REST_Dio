@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import com.projetospringjpa.academia.models.Aluno;
 import com.projetospringjpa.academia.models.Avaliacao;
+import com.projetospringjpa.academia.models.Matricula;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.AlunoDto;
 import com.projetospringjpa.academia.models.dto.AlunoUpdateDto;
 import com.projetospringjpa.academia.services.AlunoService;
@@ -74,6 +76,16 @@ public class AlunoController {
     @GetMapping(value = "/{id}/avaliacoes")
     public ResponseEntity<List<Avaliacao>> findAvaliacaoByAluno(@PathVariable Long id){
         return ResponseEntity.ok().body(service.findAllAvaliacaoById(id));
+    }
+
+    @GetMapping(value = "/{id}/turmas")
+    public ResponseEntity<List<Turmas>> findTurmasByAluno(@PathVariable Long id){
+        return ResponseEntity.ok().body(service.findTurmasByAluno(id));
+    }
+
+    @GetMapping(value = "/{id}/matriculas")
+    public ResponseEntity<List<Matricula>> findMatriculasByAluno(@PathVariable Long id){
+        return ResponseEntity.ok().body(service.findMatriculasByAluno(id));
     }
 
 }

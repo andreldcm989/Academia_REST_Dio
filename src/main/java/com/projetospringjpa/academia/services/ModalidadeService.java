@@ -1,6 +1,9 @@
 package com.projetospringjpa.academia.services;
 
+import java.util.List;
+
 import com.projetospringjpa.academia.models.Modalidade;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.ModalidadeDto;
 
 import org.springframework.data.domain.Page;
@@ -13,4 +16,5 @@ public interface ModalidadeService {
     public Modalidade saveModalidade(ModalidadeDto ModalidadeDto);
     public void delete(Modalidade Modalidade);
     public Modalidade update(Long id, ModalidadeDto ModalidadeDto);
+    public List<Turmas> findTurmasByModalidade(Long id);
 }

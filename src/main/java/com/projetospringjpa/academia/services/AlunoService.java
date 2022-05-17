@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.projetospringjpa.academia.models.Aluno;
 import com.projetospringjpa.academia.models.Avaliacao;
+import com.projetospringjpa.academia.models.Matricula;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.AlunoUpdateDto;
 
 import org.springframework.data.domain.Page;
@@ -26,5 +28,9 @@ public interface AlunoService {
     public Aluno update(Long id, AlunoUpdateDto alunoUpdateDto);
 
     public List<Avaliacao> findAllAvaliacaoById(Long id);
+
+    public List<Matricula> findMatriculasByAluno(Long id);
+
+    public List<Turmas> findTurmasByAluno(Long id);
 
 }

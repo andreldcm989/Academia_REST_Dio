@@ -33,16 +33,17 @@ public class Turmas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTurma;
-    @Column(name = "hr_inicio")
+    @Column(name = "hr_inicio", nullable = false)
     private LocalTime horario;
+    @Column(nullable = false)
     private Long duracao;
 
     @ManyToOne
-    @JoinColumn(name = "modalidade_id")
+    @JoinColumn(name = "modalidade_id", nullable = false)
     private Modalidade modalidade;
 
     @ManyToOne
-    @JoinColumn(name = "instrutor_id")
+    @JoinColumn(name = "instrutor_id", nullable = true)
     private Instrutor instrutor;
 
     @ManyToMany
@@ -53,4 +54,7 @@ public class Turmas implements Serializable {
     @JsonIgnore
     private List<Matricula> matriculas = new ArrayList<>();
 
+    public LocalTime hrTerminoAula(){
+        return horario.plusHours(duracao);
+    }
 }

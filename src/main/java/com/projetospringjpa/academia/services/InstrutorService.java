@@ -1,6 +1,9 @@
 package com.projetospringjpa.academia.services;
 
+import java.util.List;
+
 import com.projetospringjpa.academia.models.Instrutor;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.InstrutorDto;
 
 import org.springframework.data.domain.Page;
@@ -14,4 +17,5 @@ public interface InstrutorService {
     public void delete(Instrutor instrutor);
     public Instrutor update(Long id, InstrutorDto instrutorDto);
     public boolean existsByCpf(String cpf);
+    public List<Turmas> findTurmasByInstrutor(Long id);
 }

@@ -1,8 +1,11 @@
 package com.projetospringjpa.academia.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.projetospringjpa.academia.models.Instrutor;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.InstrutorDto;
 import com.projetospringjpa.academia.services.InstrutorService;
 
@@ -61,6 +64,12 @@ public class InstrutorController {
         Instrutor instrutor = service.findById(id);
         service.delete(instrutor);
         return ResponseEntity.ok().body("Instrutor excluído com sucesso!");
+    }
+
+    @GetMapping(value = "/{id}/turmas")
+    public ResponseEntity<List<Turmas>> findTurmasByInstrutor(@PathVariable Long id){
+        List<Turmas> turmas = service.findTurmasByInstrutor(id);
+        return ResponseEntity.ok().body(turmas);
     }
 
 }

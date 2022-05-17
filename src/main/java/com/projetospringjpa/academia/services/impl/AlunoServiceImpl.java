@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 
 import com.projetospringjpa.academia.models.Aluno;
 import com.projetospringjpa.academia.models.Avaliacao;
+import com.projetospringjpa.academia.models.Matricula;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.AlunoUpdateDto;
 import com.projetospringjpa.academia.repositories.AlunoRepository;
 import com.projetospringjpa.academia.services.AlunoService;
@@ -66,6 +68,18 @@ public class AlunoServiceImpl implements AlunoService {
     public List<Avaliacao> findAllAvaliacaoById(Long id) {
         Aluno aluno = findById(id);
         return aluno.getAvaliacoes();
+    }
+
+    @Override
+    public List<Matricula> findMatriculasByAluno(Long id) {
+        List<Matricula> matriculas = findById(id).getMatriculas();
+        return matriculas;
+    }
+
+    @Override
+    public List<Turmas> findTurmasByAluno(Long id) {
+        List<Turmas> turmas = findById(id).getTurmas();
+        return turmas;
     }
 
 }

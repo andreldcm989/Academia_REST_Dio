@@ -2,11 +2,13 @@ package com.projetospringjpa.academia.services.impl;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.projetospringjpa.academia.models.Modalidade;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.ModalidadeDto;
 import com.projetospringjpa.academia.repositories.ModalidadeRepository;
 import com.projetospringjpa.academia.services.ModalidadeService;
@@ -36,9 +38,9 @@ public class ModalidadeServiceImpl implements ModalidadeService {
 
     @Override
     @Transactional
-    public Modalidade saveModalidade(ModalidadeDto ModalidadeDto) {
+    public Modalidade saveModalidade(ModalidadeDto modalidadeDto) {
         Modalidade Modalidade = new Modalidade();
-        Modalidade.setNome(ModalidadeDto.getNome());
+        Modalidade.setNome(modalidadeDto.getNome());
         Modalidade.setDtCriacao(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         repository.save(Modalidade);
         return Modalidade;
@@ -58,6 +60,12 @@ public class ModalidadeServiceImpl implements ModalidadeService {
         Modalidade.setDtCriacao(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         repository.save(Modalidade);
         return Modalidade;
+    }
+
+    @Override
+    public List<Turmas> findTurmasByModalidade(Long id) {
+        List<Turmas> turmas = findById(id).getTurmas();
+        return turmas;
     }
     
 }

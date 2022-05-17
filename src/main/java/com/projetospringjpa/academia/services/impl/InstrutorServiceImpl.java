@@ -1,11 +1,13 @@
 package com.projetospringjpa.academia.services.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.projetospringjpa.academia.models.Instrutor;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.InstrutorDto;
 import com.projetospringjpa.academia.repositories.InstrutorRepository;
 import com.projetospringjpa.academia.services.InstrutorService;
@@ -65,6 +67,12 @@ public class InstrutorServiceImpl implements InstrutorService {
     @Override
     public boolean existsByCpf(String cpf) {
         return repository.existsByCpf(cpf);
+    }
+
+    @Override
+    public List<Turmas> findTurmasByInstrutor(Long id) {
+        List<Turmas> turmas = findById(id).getTurmas();
+        return turmas;
     }
     
 }

@@ -1,8 +1,11 @@
 package com.projetospringjpa.academia.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.projetospringjpa.academia.models.Modalidade;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.ModalidadeDto;
 import com.projetospringjpa.academia.services.ModalidadeService;
 
@@ -58,6 +61,12 @@ public class ModalidadeController {
         Modalidade Modalidade = service.findById(id);
         service.delete(Modalidade);
         return ResponseEntity.ok().body("Modalidade excluído com sucesso!");
+    }
+
+    @GetMapping(value = "/{id}/turmas")
+    public ResponseEntity<List<Turmas>> findTurmasByModalidade(@PathVariable Long id){
+        List<Turmas> turmas = service.findTurmasByModalidade(id);
+        return ResponseEntity.ok().body(turmas);
     }
 
 }
