@@ -34,10 +34,13 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
     @Override
     public Avaliacao createAvaliacao(AvaliacaoDto avaliacaoDto) {
         Avaliacao avaliacao = new Avaliacao();
-        Aluno aluno = alunoRepository.findById(avaliacaoDto.getAlunoId()).get();
+        Optional<Aluno> aluno = alunoRepository.findById(avaliacaoDto.getAlunoId());
+        if(!aluno.isPresent()){
+            throw new ObjectNotFoundException("Aluno não encontrado");
+        }
         BeanUtils.copyProperties(avaliacaoDto, avaliacao);
         avaliacao.setDtAvaliacao(LocalDateTime.now());
-        avaliacao.setAluno(aluno);
+        avaliacao.setAluno(aluno.get());
         avaliacaoRepository.save(avaliacao);
         return avaliacao;
     }
