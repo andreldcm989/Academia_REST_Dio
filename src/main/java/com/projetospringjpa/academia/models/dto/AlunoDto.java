@@ -21,7 +21,7 @@ public class AlunoDto {
     @NotEmpty(message = "Preencha o campo corretamente.")
     @Size(min = 3, max = 60, message = "'${ValidatedValue}' precisa ter entre {min} e {max} caracteres.")
     private String nome;
-    //@CPF(message = "'${validatedValue}' é inválido")
+    @CPF(message = "'${validatedValue}' é inválido")
     private String cpf;
 
     private String bairro;

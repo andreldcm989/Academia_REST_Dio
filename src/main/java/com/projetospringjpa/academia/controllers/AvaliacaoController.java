@@ -29,7 +29,7 @@ public class AvaliacaoController {
     private AvaliacaoService service;
 
     @GetMapping
-    public ResponseEntity<Page<Avaliacao>> findAll(@PageableDefault(page = 0, size = 10, direction = Direction.ASC) Pageable pageable){
+    public ResponseEntity<Page<Avaliacao>> findAll(@PageableDefault(page = 0,sort = "id", size = 10, direction = Direction.ASC) Pageable pageable){
         return ResponseEntity.ok().body(service.findAll(pageable));
     }
 

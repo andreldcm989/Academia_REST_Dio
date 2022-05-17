@@ -3,6 +3,8 @@ package com.projetospringjpa.academia.services.impl;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import com.projetospringjpa.academia.models.Aluno;
 import com.projetospringjpa.academia.models.Avaliacao;
 import com.projetospringjpa.academia.models.dto.AvaliacaoDto;
@@ -32,6 +34,7 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
     }
 
     @Override
+    @Transactional
     public Avaliacao createAvaliacao(AvaliacaoDto avaliacaoDto) {
         Avaliacao avaliacao = new Avaliacao();
         Optional<Aluno> aluno = alunoRepository.findById(avaliacaoDto.getAlunoId());
@@ -46,6 +49,7 @@ public class AvaliacaoServiceImpl implements AvaliacaoService {
     }
 
     @Override
+    @Transactional
     public void deleteAvaliacao(Avaliacao avaliacao) {
         avaliacaoRepository.delete(avaliacao);
     }

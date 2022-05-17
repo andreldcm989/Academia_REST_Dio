@@ -52,6 +52,7 @@ public class AlunoServiceImpl implements AlunoService {
     }
 
     @Override
+    @Transactional
     public Aluno update(Long id, AlunoUpdateDto alunoUpdateDto) {
         Aluno aluno = findById(id);
         aluno.setNome(alunoUpdateDto.getNome());
