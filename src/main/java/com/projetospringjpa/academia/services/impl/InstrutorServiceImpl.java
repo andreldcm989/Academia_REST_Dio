@@ -74,5 +74,7 @@ public class InstrutorServiceImpl implements InstrutorService {
         List<Turmas> turmas = findById(id).getTurmas();
         return turmas;
     }
+
+    
     
 }

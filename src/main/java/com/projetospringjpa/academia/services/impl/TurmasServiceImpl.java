@@ -1,11 +1,13 @@
 package com.projetospringjpa.academia.services.impl;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import com.projetospringjpa.academia.models.Aluno;
+import com.projetospringjpa.academia.models.Instrutor;
 import com.projetospringjpa.academia.models.Matricula;
 import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.TurmasDto;
@@ -83,6 +85,22 @@ public class TurmasServiceImpl implements TurmasService {
     public List<Matricula> findMatriculasByTurma(Long id) {
         List<Matricula> matriculas = findById(id).getMatriculas();
         return matriculas;
+    }
+
+    @Override
+    public boolean conflitoDeHorario(Instrutor instrutor, TurmasDto turmas) {
+        for (Turmas t : instrutor.getTurmas()) {
+            LocalTime inicio = t.getHorario();
+            LocalTime fim = t.hrTerminoAula();
+            if (turmas.getHorario().isAfter(inicio) && turmas.getHorario().isBefore(fim) ||
+                    turmas.hrTerminoAula().isAfter(inicio) && turmas.hrTerminoAula().isBefore(fim) ||
+                    inicio.isAfter(turmas.getHorario()) && inicio.isBefore(turmas.hrTerminoAula()) ||
+                    fim.isAfter(turmas.getHorario()) && fim.isBefore(turmas.hrTerminoAula()) ||
+                    turmas.getHorario() == inicio) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

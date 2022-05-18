@@ -47,7 +47,7 @@ public class Turmas implements Serializable {
     private Instrutor instrutor;
 
     @ManyToMany
-    @JoinTable(name = "tb_matricula", joinColumns = @JoinColumn(name = "turmas_id"), inverseJoinColumns = @JoinColumn(name = "aluno_id"))
+    @JoinTable(name = "tb_matricula", joinColumns = @JoinColumn(name = "turma_id"), inverseJoinColumns = @JoinColumn(name = "aluno_id"))
     private List<Aluno> alunos = new ArrayList<>();
 
     @OneToMany(mappedBy = "turma")
@@ -55,6 +55,6 @@ public class Turmas implements Serializable {
     private List<Matricula> matriculas = new ArrayList<>();
 
     public LocalTime hrTerminoAula(){
-        return horario.plusHours(duracao);
+        return horario.plusMinutes(duracao);
     }
 }

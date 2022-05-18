@@ -28,7 +28,7 @@ public class AlunoServiceImpl implements AlunoService {
     @Override
     public Aluno findById(Long id) {
         Optional<Aluno> aluno = repository.findById(id);
-        return aluno.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+        return aluno.orElseThrow(() -> new ObjectNotFoundException("Aluno não encontrado"));
     }
 
     @Override

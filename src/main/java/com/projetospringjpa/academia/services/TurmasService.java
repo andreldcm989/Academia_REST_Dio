@@ -3,6 +3,7 @@ package com.projetospringjpa.academia.services;
 import java.util.List;
 
 import com.projetospringjpa.academia.models.Aluno;
+import com.projetospringjpa.academia.models.Instrutor;
 import com.projetospringjpa.academia.models.Matricula;
 import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.TurmasDto;
@@ -19,4 +20,5 @@ public interface TurmasService {
     public Turmas update(Long id, TurmasDto TurmasDto);
     public List<Aluno> findAlunosByTurma(Long id);
     public List<Matricula> findMatriculasByTurma(Long id);
+    public boolean conflitoDeHorario(Instrutor instrutor, TurmasDto turmasDto);
 }

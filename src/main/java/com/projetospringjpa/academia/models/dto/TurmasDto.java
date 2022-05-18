@@ -16,5 +16,9 @@ public class TurmasDto {
     private Long idModalidade;
     private Long idInstrutor;
 
+    public LocalTime hrTerminoAula(){
+        return horario.plusMinutes(duracao);
+    }
+
     
 }

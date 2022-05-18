@@ -8,6 +8,8 @@ import com.projetospringjpa.academia.models.Aluno;
 import com.projetospringjpa.academia.models.Matricula;
 import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.TurmasDto;
+import com.projetospringjpa.academia.services.InstrutorService;
+import com.projetospringjpa.academia.services.ModalidadeService;
 import com.projetospringjpa.academia.services.TurmasService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,12 @@ public class TurmasController {
     @Autowired
     private TurmasService service;
 
+    @Autowired
+    private ModalidadeService modalidadeService;
+
+    @Autowired
+    private InstrutorService instrutorService;
+
     @GetMapping
     public ResponseEntity<Page<Turmas>> findAll(@PageableDefault(page = 0, size = 10, direction = Direction.ASC) Pageable pageable) {
         Page<Turmas> turmas = service.findAll(pageable);
@@ -47,6 +55,13 @@ public class TurmasController {
 
     @PostMapping
     public ResponseEntity<Object> createTurmas(@RequestBody @Valid TurmasDto turmasDto){
+        Long modalidade = modalidadeService.findById(turmasDto.getIdModalidade()).getId();
+        if(modalidade != turmasDto.getIdModalidade()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modalidade não encontrada.");
+        }
+        if(service.conflitoDeHorario(instrutorService.findById(turmasDto.getIdInstrutor()), turmasDto)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito de horários: O Instrutor já possui turma neste horário!");
+        }
         Turmas turmas = service.saveTurmas(turmasDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(turmas);
     }

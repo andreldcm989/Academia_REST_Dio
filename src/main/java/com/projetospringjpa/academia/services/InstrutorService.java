@@ -18,4 +18,5 @@ public interface InstrutorService {
     public Instrutor update(Long id, InstrutorDto instrutorDto);
     public boolean existsByCpf(String cpf);
     public List<Turmas> findTurmasByInstrutor(Long id);
+    
 }

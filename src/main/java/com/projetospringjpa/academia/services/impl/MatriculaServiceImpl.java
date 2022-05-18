@@ -1,11 +1,15 @@
 package com.projetospringjpa.academia.services.impl;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.projetospringjpa.academia.models.Aluno;
 import com.projetospringjpa.academia.models.Matricula;
+import com.projetospringjpa.academia.models.Turmas;
 import com.projetospringjpa.academia.models.dto.MatriculaDto;
 import com.projetospringjpa.academia.repositories.AlunoRepository;
 import com.projetospringjpa.academia.repositories.MatriculaRepository;
@@ -45,7 +49,7 @@ public class MatriculaServiceImpl implements MatriculaService {
     @Transactional
     public Matricula saveMatricula(MatriculaDto matriculaDto) {
         Matricula matricula = new Matricula();
-        matricula.setDtMatricula(String.format("dd/MM/yyyy HH:mm:ss", LocalDateTime.now()));
+        matricula.setDtMatricula(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
         matricula.setAluno(alunoRepository.findById(matriculaDto.getIdAluno()).get());
         matricula.setTurma(turmasRepository.findById(matriculaDto.getIdTurma()).get());
         repository.save(matricula);
@@ -66,6 +70,22 @@ public class MatriculaServiceImpl implements MatriculaService {
         matricula.setTurma(turmasRepository.findById(matriculaDto.getIdTurma()).get());
         repository.save(matricula);
         return matricula;
+    }
+
+    @Override
+    public boolean conflitoDeHorario(Aluno aluno, Turmas turmas) {
+        for (Turmas t : aluno.getTurmas()) {
+            LocalTime inicio = t.getHorario();
+            LocalTime fim = t.hrTerminoAula();
+            if(turmas.getHorario().isAfter(inicio) && turmas.getHorario().isBefore(fim) ||
+                turmas.hrTerminoAula().isAfter(inicio) && turmas.hrTerminoAula().isBefore(fim) ||
+                inicio.isAfter(turmas.getHorario()) && inicio.isBefore(turmas.hrTerminoAula()) ||
+                fim.isAfter(turmas.getHorario()) && fim.isBefore(turmas.hrTerminoAula()) ||
+                turmas.getHorario() == inicio){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
