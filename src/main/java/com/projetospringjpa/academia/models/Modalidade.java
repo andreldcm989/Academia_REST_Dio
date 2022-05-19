@@ -1,6 +1,7 @@
 package com.projetospringjpa.academia.models;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Modalidade implements Serializable {
     @Column(name = "modalidade", nullable = false)
     private String nome;
     @Column(nullable = false)
-    private String dtCriacao;
+    private LocalDateTime dtCriacao;
 
     @OneToMany(mappedBy = "modalidade", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore

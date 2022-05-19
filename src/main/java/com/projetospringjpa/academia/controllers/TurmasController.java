@@ -68,6 +68,13 @@ public class TurmasController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<Object> updateTurmas(@PathVariable Long id, @RequestBody TurmasDto turmasDto){
+        Long modalidade = modalidadeService.findById(turmasDto.getIdModalidade()).getId();
+        if(modalidade != turmasDto.getIdModalidade()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Modalidade não encontrada.");
+        }
+        if(service.conflitoDeHorario(instrutorService.findById(turmasDto.getIdInstrutor()), turmasDto)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito de horários: O Instrutor já possui turma neste horário!");
+        }
         service.update(id, turmasDto);
         return ResponseEntity.ok().body("Cadastro atualizado!");
     }

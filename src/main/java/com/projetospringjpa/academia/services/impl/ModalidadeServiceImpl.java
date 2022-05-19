@@ -1,7 +1,6 @@
 package com.projetospringjpa.academia.services.impl;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +40,7 @@ public class ModalidadeServiceImpl implements ModalidadeService {
     public Modalidade saveModalidade(ModalidadeDto modalidadeDto) {
         Modalidade Modalidade = new Modalidade();
         Modalidade.setNome(modalidadeDto.getNome());
-        Modalidade.setDtCriacao(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        Modalidade.setDtCriacao(LocalDateTime.now());
         repository.save(Modalidade);
         return Modalidade;
     }
@@ -57,7 +56,7 @@ public class ModalidadeServiceImpl implements ModalidadeService {
     public Modalidade update(Long id, ModalidadeDto ModalidadeDto) {
         Modalidade Modalidade = findById(id);
         Modalidade.setNome(ModalidadeDto.getNome());
-        Modalidade.setDtCriacao(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
+        Modalidade.setDtCriacao(LocalDateTime.now());
         repository.save(Modalidade);
         return Modalidade;
     }

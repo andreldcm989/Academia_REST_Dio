@@ -67,15 +67,26 @@ public class MatriculaController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Object> updateMatricula(@PathVariable Long id, @RequestBody MatriculaDto MatriculaDto){
-        service.update(id, MatriculaDto);
+    public ResponseEntity<Object> updateMatricula(@PathVariable Long id, @RequestBody MatriculaDto matriculaDto){
+        Long turma = turmasService.findById(matriculaDto.getIdTurma()).getIdTurma();
+        boolean alunoNaTurma = turmasService.findAlunosByTurma(matriculaDto.getIdTurma()).contains(alunoService.findById(matriculaDto.getIdAluno()));
+        if(turma != matriculaDto.getIdTurma()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Turma não encontrada.");
+        }
+        if(alunoNaTurma){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("O aluno já está matriculado nesta turma!");
+        }
+        if(service.conflitoDeHorario(alunoService.findById(matriculaDto.getIdAluno()), turmasService.findById(matriculaDto.getIdTurma()))){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito de horários: O aluno já possui aulas neste horário!");
+        }
+        service.update(id, matriculaDto);
         return ResponseEntity.ok().body("Cadastro atualizado!");
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Object> deleteMatricula(@PathVariable Long id){
-        Matricula Matricula = service.findById(id);
-        service.delete(Matricula);
+        Matricula matricula = service.findById(id);
+        service.delete(matricula);
         return ResponseEntity.ok().body("Matricula excluído com sucesso!");
     }
 

@@ -25,7 +25,7 @@ public class Avaliacao implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime dtAvaliacao = LocalDateTime.now();
+    private LocalDateTime dtAvaliacao;
     private Double peso;
     private Double altura;
 

@@ -7,8 +7,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +19,7 @@ public class AlunoDto {
     @NotEmpty(message = "Preencha o campo corretamente.")
     @Size(min = 3, max = 60, message = "'${ValidatedValue}' precisa ter entre {min} e {max} caracteres.")
     private String nome;
-    //@CPF(message = "'${validatedValue}' é inválido")
+    @NotEmpty
     private String cpf;
 
     private String bairro;
